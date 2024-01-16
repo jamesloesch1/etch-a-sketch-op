@@ -1,24 +1,45 @@
 const container = document.querySelector('.container');
 
-const createGrid = function(gridWidth, gridHeight) {
-    
-    container.style.height = (gridHeight) * 25 + "px";
-    container.style.width = (gridWidth) * 25 + "px";
+const body = document.querySelector('body');
 
-    for (let i = 0; i < (gridWidth * gridHeight); i++) {
-        let gridSquare = document.createElement('div');
-        gridSquare.classList.add('grid-square');
-        container.appendChild(gridSquare);
-    }
-    
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('.button-container');
+body.appendChild(buttonContainer);
+
+buttonContainer.style.height = '30px';
+buttonContainer.style.widows = '30px';
+
+const getGridSize = document.createElement('button');
+getGridSize.style.fontSize = '20px';
+getGridSize.textContent = 'Make a new grid';
+getGridSize.style.padding = '20px';
+getGridSize.style.margin = '10px';
+
+buttonContainer.appendChild(getGridSize);
+
+const createGrid = function() {
+    let gridSize = Number(prompt("Enter pixel value for grid"));
+
+    if (gridSize > 64) {
+        alert("Too big, grid must be 64 pixels or below");
+    } else {
+        container.innerHTML = ""; 
+        container.style.height = (gridSize) * 10 + "px";
+        container.style.width = (gridSize) * 10 + "px";
+
+        for (let i = 0; i < (gridSize * gridSize); i++) {
+            gridSquare = document.createElement('div');
+            gridSquare.classList.add('grid-square');
+            container.appendChild(gridSquare);
+            gridSquare.addEventListener('mousedown', (e) => {
+                e.target.style.backgroundColor = 'blue';
+            });
+        }
+    };
 };
 
-createGrid(24, 24);
+getGridSize.addEventListener('click', createGrid);
 
-let gridSquareColor = document.querySelector('.grid-square');
 
-gridSquareColor.addEventListener("mouseenter", (e) => {
-    e.target.style.backgroundColor = "black";
 
-});
 
